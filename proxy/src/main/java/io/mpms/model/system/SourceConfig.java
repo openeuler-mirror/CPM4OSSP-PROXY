@@ -25,4 +25,12 @@ public class SourceConfig implements Serializable {
     private String codename;
 
     private String components;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
