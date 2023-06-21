@@ -14,4 +14,12 @@ public class NetstatModel extends BaseJsonModel {
     private String foreign;
     private String status;
     private String name;
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
 }
