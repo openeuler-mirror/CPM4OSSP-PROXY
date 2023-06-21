@@ -95,4 +95,24 @@ public class DelayedTaskServiceImpl implements DelayedTaskService {
     public boolean deleteTaskById(Integer id) {
         return delayedTaskDao.deleteById(this.nodeId, id) > 0;
     }
+
+    @Override
+    public JSONObject addAllTask(String taskList) {
+        JSONObject taskArray = new JSONObject();
+        JSONArray success = new JSONArray();
+        JSONArray fail = new JSONArray();
+        List<DelayedTask> delayedTaskList = taskParser.getTaskListFromStr(taskList);
+        for (DelayedTask it : delayedTaskList) {
+            it.setTaskStatus(0);
+            if (delayedTaskDao.insert(it) > 0) {
+                delayedTaskDao.setLastInsertTaskId();
+                success.add(taskParser.taskModelToJsonobject(it));
+            } else {
+                fail.add(taskParser.taskModelToJsonobject(it));
+            }
+        }
+        taskArray.put("success", success);
+        taskArray.put("fail", fail);
+        return taskArray;
+    }
 }
