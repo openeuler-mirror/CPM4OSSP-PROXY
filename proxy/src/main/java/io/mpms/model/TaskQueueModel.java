@@ -65,4 +65,10 @@ public class TaskQueueModel {
         }
         return true;
     }
+
+    public boolean removeTask(Integer id) {
+        DelayedTaskModel tmpTask = findTask(id);
+
+        return taskModels.remove(tmpTask);
+    }
 }
