@@ -45,4 +45,8 @@ public class ScriptModel extends BaseModel {
     public void setModifyTime(String modifyTime) {
         this.modifyTime = modifyTime;
     }
+
+    public String getContext() {
+        return context;
+    }
 }
