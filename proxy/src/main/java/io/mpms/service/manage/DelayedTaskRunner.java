@@ -2,6 +2,7 @@ package io.mpms.service.manage;
 
 import cn.jiangzeyin.common.DefaultSystemLog;
 import io.mpms.service.mysqldb.DelayedTaskService;
+import io.mpms.service.mysqldb.MiniSysLogService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
