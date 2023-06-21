@@ -42,4 +42,32 @@ public class ProcessModel extends BaseJsonModel {
      * 优先级
      */
     private String pr = StrUtil.DASHED;
+    /**
+     * nice值
+     */
+    private String ni = StrUtil.DASHED;
+    /**
+     * 虚拟内存
+     */
+    private String virt = StrUtil.DASHED;
+    /**
+     * 共享内存大小
+     */
+    private String shr = StrUtil.DASHED;
+    /**
+     * 内存比重
+     */
+    private String mem = StrUtil.DASHED;
+    /**
+     * cpu比重
+     */
+    private String cpu = StrUtil.DASHED;
+    /**
+     * 端口
+     */
+    private String port = StrUtil.DASHED;
+    /**
+     * Jpom 项目名称
+     */
+    private String jpomName = StrUtil.DASHED;
 }
