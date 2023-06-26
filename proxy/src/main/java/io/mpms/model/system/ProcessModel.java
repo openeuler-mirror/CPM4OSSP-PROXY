@@ -70,4 +70,8 @@ public class ProcessModel extends BaseJsonModel {
      * Jpom 项目名称
      */
     private String jpomName = StrUtil.DASHED;
+
+    public String getPort() {
+        return port;
+    }
 }
