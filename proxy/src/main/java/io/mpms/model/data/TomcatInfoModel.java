@@ -25,4 +25,12 @@ public class TomcatInfoModel extends BaseModel {
     private String creator;
     private String createTime;
     private String modifyUser;
+    private String modifyTime;
+
+    public String getPath() {
+        if (path == null) {
+            return null;
+        }
+        return FileUtil.normalize(path + "/");
+    }
 }
