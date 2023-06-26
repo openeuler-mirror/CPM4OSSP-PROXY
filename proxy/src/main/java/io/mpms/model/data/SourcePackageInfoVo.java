@@ -43,4 +43,13 @@ public class SourcePackageInfoVo implements Serializable{
     public void setArchitecture(String architecture) {
         Architecture = architecture;
     }
+
+    @Override
+    public String toString() {
+        return "SourcePackageInfoVo{" +
+                "Package='" + Package + '\'' +
+                ", Version='" + Version + '\'' +
+                ", Architecture='" + Architecture + '\'' +
+                '}';
+    }
 }
