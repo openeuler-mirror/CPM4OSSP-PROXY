@@ -54,4 +54,11 @@ public class CertModel extends BaseModel {
      * 白名单路径
      */
     private String whitePath;
+
+    private Type type;
+
+    public Type getType() {
+        return type;
+    }
+
 }
