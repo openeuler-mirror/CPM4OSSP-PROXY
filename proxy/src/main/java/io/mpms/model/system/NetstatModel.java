@@ -22,4 +22,8 @@ public class NetstatModel extends BaseJsonModel {
     public void setProtocol(String protocol) {
         this.protocol = protocol;
     }
+
+    public String getReceive() {
+        return receive;
+    }
 }
