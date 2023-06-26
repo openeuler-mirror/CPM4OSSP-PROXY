@@ -52,4 +52,9 @@ public class DelayedTaskModel implements Comparable<DelayedTaskModel> {
      * 任务结果
      */
     private String taskContent;
+
+    /*
+     * 扩展项
+     */
+    private String taskExtra;
 }
