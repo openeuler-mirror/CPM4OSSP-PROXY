@@ -48,4 +48,46 @@ public class ProjectInfoModel extends BaseModel {
      * jvm 参数
      */
     private String jvm;
+    /**
+     * java main 方法参数
+     */
+    private String args;
+
+    private List<JavaCopyItem> javaCopyItemList;
+    /**
+     * WebHooks
+     */
+    private String token;
+    private boolean status;
+    private String createTime;
+    private String modifyTime;
+    private String jdkId;
+    /**
+     * lib 目录当前文件状态
+     */
+    private String useLibDesc;
+    /**
+     * 当前运行lib 状态
+     */
+    private String runLibDesc;
+    /**
+     * 最后修改人
+     */
+    private String modifyUser;
+
+    private RunMode runMode;
+    /**
+     * 节点分发项目，不允许在项目管理中编辑
+     */
+    private boolean outGivingProject;
+    /**
+     * 实际运行的命令
+     */
+    private String runCommand;
+
+    /**
+     * -Djava.ext.dirs=lib -cp conf:run.jar
+     * 填写【lib:conf】
+     */
+    private String javaExtDirsCp;
 }
