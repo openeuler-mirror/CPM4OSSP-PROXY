@@ -71,4 +71,16 @@ public class TaskQueueModel {
 
         return taskModels.remove(tmpTask);
     }
+
+    public boolean modifyStatus(Integer id, Integer taskStatus, String taskContent) {
+        DelayedTaskModel tmpTask = findTask(id);
+
+        if (tmpTask != null) {
+            tmpTask.setTaskStatus(taskStatus);
+            tmpTask.setTaskContent(taskContent);
+            return true;
+        }
+
+        return false;
+    }
 }
