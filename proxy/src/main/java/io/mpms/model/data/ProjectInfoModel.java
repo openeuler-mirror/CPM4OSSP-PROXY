@@ -90,4 +90,8 @@ public class ProjectInfoModel extends BaseModel {
      * 填写【lib:conf】
      */
     private String javaExtDirsCp;
+
+    public List<JavaCopyItem> getJavaCopyItemList() {
+        return javaCopyItemList;
+    }
 }
