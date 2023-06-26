@@ -22,4 +22,12 @@ public class DelayedTask implements Serializable, Comparable<DelayedTask> {
     private Integer taskStatus;
 
     private String taskContent;
+
+    private Integer taskViewTimes;
+
+    private Integer taskGroupId;
+
+    private String taskNodeId;
+
+    private String taskExtra;
 }
