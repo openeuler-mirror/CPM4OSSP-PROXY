@@ -30,4 +30,8 @@ public class DelayedTask implements Serializable, Comparable<DelayedTask> {
     private String taskNodeId;
 
     private String taskExtra;
+
+    public Integer getId() {
+        return id;
+    }
 }
