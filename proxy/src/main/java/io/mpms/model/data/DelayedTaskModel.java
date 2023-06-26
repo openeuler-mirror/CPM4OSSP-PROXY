@@ -42,4 +42,14 @@ public class DelayedTaskModel implements Comparable<DelayedTaskModel> {
      * 任务行为，“install、uninstall、update”
      */
     private String taskAction;
+
+    /*
+     * 任务目标，包名称
+     */
+    private String taskTarget;
+
+    /*
+     * 任务结果
+     */
+    private String taskContent;
 }
