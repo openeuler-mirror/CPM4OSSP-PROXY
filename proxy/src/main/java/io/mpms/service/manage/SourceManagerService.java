@@ -46,4 +46,28 @@ public class SourceManagerService implements Runnable {
         sourceconfig.setComponents(sourcestr.substring(sourcestr.indexOf(sourceList[3])));
         return sourceconfig;
     }
+
+    private boolean isAvailableSource(SourceConfig sourceconfig) {
+        String sourceIndex = "";
+        String uriStr = sourceconfig.getUri();
+        if (uriStr.startsWith("http://")) {
+            String http = "http://";
+            sourceIndex = uriStr.substring(http.length() + 1);
+        } else if (uriStr.startsWith("https://")) {
+            String http = "https://";
+            sourceIndex = uriStr.substring(http.length() + 1);
+        } else {
+            netCheckContent = "Source list(" + sourceconfig.getUri() + ") format error.";
+            return false;
+        }
+        String sourceAdress = sourceIndex.substring(0, sourceIndex.indexOf("/"));
+        String cmdResult = CommandUtil.execSystemCommand("ping -c 2 -w 2" + sourceAdress + "grep \"packet loss\"");
+
+        if (cmdResult.indexOf("%") > 3 &&
+                (cmdResult.startsWith("100", cmdResult.indexOf("%") - 3))) {
+            netCheckContent = "Source list(" + sourceconfig.getUri() + ") cannot be connected.";
+            return false;
+        }
+        return true;
+    }
 }
