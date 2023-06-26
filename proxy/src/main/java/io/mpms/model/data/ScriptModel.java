@@ -49,4 +49,8 @@ public class ScriptModel extends BaseModel {
     public String getContext() {
         return context;
     }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
 }
