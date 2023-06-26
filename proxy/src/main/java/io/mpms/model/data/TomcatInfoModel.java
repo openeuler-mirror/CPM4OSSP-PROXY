@@ -33,4 +33,20 @@ public class TomcatInfoModel extends BaseModel {
         }
         return FileUtil.normalize(path + "/");
     }
+
+    /**
+     * 检测路径是否正确
+     *
+     * @return path
+     */
+    public String pathAndCheck() {
+        String path = getPath();
+        if (path == null) {
+            return null;
+        }
+        if (isTomcatRoot(path)) {
+            return path;
+        }
+        throw new RuntimeException(String.format("没有在路径：%s 下检测到Tomcat", path));
+    }
 }
