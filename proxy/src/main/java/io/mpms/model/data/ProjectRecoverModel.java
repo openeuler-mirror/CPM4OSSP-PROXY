@@ -37,4 +37,8 @@ public class ProjectRecoverModel extends BaseModel {
     public void setProjectInfoModel(ProjectInfoModel projectInfoModel) {
         this.projectInfoModel = projectInfoModel;
     }
+
+    public String getDelUser() {
+        return delUser;
+    }
 }
