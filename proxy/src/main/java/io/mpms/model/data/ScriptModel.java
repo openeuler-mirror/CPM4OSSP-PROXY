@@ -53,4 +53,12 @@ public class ScriptModel extends BaseModel {
     public void setContext(String context) {
         this.context = context;
     }
+
+    public File getFile(boolean get) {
+        if (StrUtil.isEmpty(getId())) {
+            throw new IllegalArgumentException("id 为空");
+        }
+        File path = AgentConfigBean.getInstance().getScriptPath();
+        return FileUtil.file(path, getId(), "script." + CommandUtil.SUFFIX);
+    }
 }
