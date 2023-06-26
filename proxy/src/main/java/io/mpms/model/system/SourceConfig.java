@@ -33,4 +33,8 @@ public class SourceConfig implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public String getOsVersion() {
+        return osVersion;
+    }
 }
