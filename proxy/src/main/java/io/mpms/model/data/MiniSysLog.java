@@ -34,4 +34,13 @@ public class MiniSysLog implements Serializable {
         this.type = 0;
         this.time = DateTime.now().toString();
     }
+
+    public MiniSysLog(int level, String content, String extra) {
+        this.id = 1;
+        this.type = 0;
+        this.time = DateTime.now().toString();
+        this.level = level;
+        this.content = content;
+        this.extra = extra;
+    }
 }
