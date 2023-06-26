@@ -83,4 +83,8 @@ public class TaskQueueModel {
 
         return false;
     }
+
+    public DelayedTaskModel peekHeadTask() {
+        return taskModels.peek();
+    }
 }
