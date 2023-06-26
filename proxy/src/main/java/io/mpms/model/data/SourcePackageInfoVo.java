@@ -39,4 +39,8 @@ public class SourcePackageInfoVo implements Serializable{
     public String getArchitecture() {
         return Architecture;
     }
+
+    public void setArchitecture(String architecture) {
+        Architecture = architecture;
+    }
 }
