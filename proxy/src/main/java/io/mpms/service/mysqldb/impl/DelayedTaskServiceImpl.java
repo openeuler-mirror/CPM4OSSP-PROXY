@@ -115,4 +115,17 @@ public class DelayedTaskServiceImpl implements DelayedTaskService {
         taskArray.put("fail", fail);
         return taskArray;
     }
+
+    @Override
+    public JSONArray getTaskStatus() {
+        List<DelayedTask> delayedTaskList = this.queryAllData();
+        JSONArray ret = new JSONArray();
+
+        for (DelayedTask item : delayedTaskList) {
+
+            ret.add(taskParser.taskModelToJsonobject(item));
+        }
+
+        return ret;
+    }
 }
