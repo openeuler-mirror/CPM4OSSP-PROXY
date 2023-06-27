@@ -87,4 +87,13 @@ public class TaskQueueModel {
     public DelayedTaskModel peekHeadTask() {
         return taskModels.peek();
     }
+
+    public DelayedTaskModel peekPraperTask() {
+        for (DelayedTaskModel item : taskModels) {
+            if (item.getTaskStatus().equals(0)) {
+                return item;
+            }
+        }
+        return null;
+    }
 }
