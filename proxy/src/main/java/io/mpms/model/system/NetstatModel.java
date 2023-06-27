@@ -26,4 +26,8 @@ public class NetstatModel extends BaseJsonModel {
     public String getReceive() {
         return receive;
     }
+
+    public void setReceive(String receive) {
+        this.receive = receive;
+    }
 }
