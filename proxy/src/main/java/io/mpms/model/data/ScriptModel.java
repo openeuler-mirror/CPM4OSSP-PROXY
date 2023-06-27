@@ -61,4 +61,19 @@ public class ScriptModel extends BaseModel {
         File path = AgentConfigBean.getInstance().getScriptPath();
         return FileUtil.file(path, getId(), "script." + CommandUtil.SUFFIX);
     }
+
+    public File logFile() {
+        if (StrUtil.isEmpty(getId())) {
+            throw new IllegalArgumentException("id 为空");
+        }
+        File path = AgentConfigBean.getInstance().getScriptPath();
+        File logFile;
+        int count = 0;
+        do {
+            String now = DateTime.now().toString(DatePattern.PURE_DATETIME_PATTERN);
+            logFile = FileUtil.file(path, getId(), "log", now + count + ".log");
+            count++;
+        } while (FileUtil.exist(logFile));
+        return logFile;
+    }
 }
