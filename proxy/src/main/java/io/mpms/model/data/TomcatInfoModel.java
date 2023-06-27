@@ -49,4 +49,8 @@ public class TomcatInfoModel extends BaseModel {
         }
         throw new RuntimeException(String.format("没有在路径：%s 下检测到Tomcat", path));
     }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 }
