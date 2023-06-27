@@ -43,4 +43,8 @@ public class MiniSysLog implements Serializable {
         this.content = content;
         this.extra = extra;
     }
+
+    public Integer getId() {
+        return id;
+    }
 }
