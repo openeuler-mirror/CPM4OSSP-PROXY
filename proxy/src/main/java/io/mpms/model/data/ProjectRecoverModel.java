@@ -45,4 +45,8 @@ public class ProjectRecoverModel extends BaseModel {
     public void setDelUser(String delUser) {
         this.delUser = delUser;
     }
+
+    public String getDelTime() {
+        return delTime;
+    }
 }
