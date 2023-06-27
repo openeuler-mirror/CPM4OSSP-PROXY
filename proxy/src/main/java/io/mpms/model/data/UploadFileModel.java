@@ -39,4 +39,8 @@ public class UploadFileModel extends BaseModel {
     public void setSavePath(String savePath) {
         this.savePath = savePath;
     }
+
+    public String getVersion() {
+        return version;
+    }
 }
