@@ -65,4 +65,8 @@ public class CertModel extends BaseModel {
         this.type = type;
     }
 
+    public String getWhitePath() {
+        return whitePath;
+    }
+
 }
