@@ -57,4 +57,8 @@ public class DelayedTaskModel implements Comparable<DelayedTaskModel> {
      * 扩展项
      */
     private String taskExtra;
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
