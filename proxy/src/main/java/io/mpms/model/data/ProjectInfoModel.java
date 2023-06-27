@@ -94,4 +94,8 @@ public class ProjectInfoModel extends BaseModel {
     public List<JavaCopyItem> getJavaCopyItemList() {
         return javaCopyItemList;
     }
+
+    public void setJavaCopyItemList(List<JavaCopyItem> javaCopyItemList) {
+        this.javaCopyItemList = javaCopyItemList;
+    }
 }
