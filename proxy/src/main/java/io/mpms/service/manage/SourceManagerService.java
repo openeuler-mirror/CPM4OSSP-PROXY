@@ -70,4 +70,8 @@ public class SourceManagerService implements Runnable {
         }
         return true;
     }
+
+    public static String getFile() {
+        return FileOperator.getFileContent(SourceFileName);
+    }
 }
