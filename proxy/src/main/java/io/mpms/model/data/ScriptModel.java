@@ -76,4 +76,13 @@ public class ScriptModel extends BaseModel {
         } while (FileUtil.exist(logFile));
         return logFile;
     }
+
+    public void saveFile() {
+        File file = getFile(true);
+        FileUtil.writeString(getContext(), file, JpomApplication.getCharset());
+//        // 添加权限
+//        if (SystemUtil.getOsInfo().isLinux()) {
+//            CommandUtil.execCommand("chmod 755 " + FileUtil.getAbsolutePath(file));
+//        }
+    }
 }
