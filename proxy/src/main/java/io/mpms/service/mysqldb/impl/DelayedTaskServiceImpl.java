@@ -3,6 +3,7 @@ package io.mpms.service.mysqldb.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.jpom.service.mysqldb.DelayedTaskService;
+import io.mpms.model.data.DelayedTask;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
