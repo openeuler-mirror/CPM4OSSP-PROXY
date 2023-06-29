@@ -49,4 +49,8 @@ public class ProjectRecoverModel extends BaseModel {
     public String getDelTime() {
         return delTime;
     }
+
+    public void setDelTime(String delTime) {
+        this.delTime = delTime;
+    }
 }
