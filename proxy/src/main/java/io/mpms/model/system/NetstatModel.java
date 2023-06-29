@@ -30,4 +30,8 @@ public class NetstatModel extends BaseJsonModel {
     public void setReceive(String receive) {
         this.receive = receive;
     }
+
+    public String getSend() {
+        return send;
+    }
 }
