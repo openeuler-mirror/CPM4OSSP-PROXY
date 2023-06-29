@@ -13,5 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "pkg/dependency")
 public class DependencyController {
+    @RequestMapping(value = "queryDependency")
+    @NotAuthorize
+    public String queryDependency(@RequestBody DebPkg debPkg) {
+        String command = String.format("apt-cache depends %s", debPkg.getPackageName());
+        SystemCommanderResult systemCommanderResult = CommandUtil.execAgentSystemCommand(command);
 
+        if (StringUtils.equals(systemCommanderResult.getCommanderStaus() + "", "0")) {
+            String commanderresult = systemCommanderResult.getCommanderresult();
+            return JsonMessage.getString(200, "", DependencyParse.parseDependency(commanderresult));
+        } else {
+            return JsonMessage.getString(500, String.format("[%d] %s", systemCommanderResult.getCommanderStaus(), systemCommanderResult.getCommanderresult()), "");
+        }
+    }
 }
