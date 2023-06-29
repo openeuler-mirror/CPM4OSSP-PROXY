@@ -26,5 +26,15 @@ import java.util.List;
  */
 @RestController
 public class IndexController extends BaseAgentController {
+    @Resource
+    private WhitelistDirectoryService whitelistDirectoryService;
+    @Resource
+    private ProjectInfoService projectInfoService;
+
+    @RequestMapping(value = {"index", "", "index.html", "/"}, produces = MediaType.TEXT_PLAIN_VALUE)
+    @NotAuthorize
+    public String index() {
+        return "Jpom-Agent,Can't access directly,Please configure it to JPOM server";
+    }
 
 }
