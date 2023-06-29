@@ -39,6 +39,19 @@ public class TomcatEditService extends BaseOperService<TomcatInfoModel> {
     }
 
     /**
+     * 修改tomcat信息
+     * @param tomcatInfoModel tomcat信息
+     *
+     */
+    @Override
+    public void updateItem(TomcatInfoModel tomcatInfoModel) {
+        tomcatInfoModel.setModifyTime(DateUtil.now());
+        super.updateItem(tomcatInfoModel);
+
+    }
+
+
+    /**
      * 添加Tomcat
      *
      * @param tomcatInfoModel tomcat信息
@@ -48,17 +61,4 @@ public class TomcatEditService extends BaseOperService<TomcatInfoModel> {
         tomcatInfoModel.setCreateTime(DateUtil.now());
         super.addItem(tomcatInfoModel);
     }
-
-    /**
-     * 修改tomcat信息
-     *
-     * @param tomcatInfoModel tomcat信息
-     */
-    @Override
-    public void updateItem(TomcatInfoModel tomcatInfoModel) {
-        tomcatInfoModel.setModifyTime(DateUtil.now());
-        super.updateItem(tomcatInfoModel);
-
-    }
-
 }
