@@ -15,5 +15,11 @@ import java.util.List;
 @Mapper
 public interface SourceConfigDao {
 
-
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param id 主键
+     * @return 实例对象
+     */
+    SourceConfig queryById(Integer id);
 }
