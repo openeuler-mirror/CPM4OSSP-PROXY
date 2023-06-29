@@ -41,4 +41,8 @@ public class SourceConfig implements Serializable {
     public void setOsVersion(String osVersion) {
         this.osVersion = osVersion;
     }
+
+    public String getArch() {
+        return arch;
+    }
 }
