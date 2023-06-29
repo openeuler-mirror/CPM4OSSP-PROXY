@@ -53,4 +53,8 @@ public class TomcatInfoModel extends BaseModel {
     public void setPath(String path) {
         this.path = path;
     }
+
+    public int getPort() {
+        return port;
+    }
 }
