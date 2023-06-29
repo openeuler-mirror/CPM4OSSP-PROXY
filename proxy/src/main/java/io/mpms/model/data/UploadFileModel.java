@@ -43,4 +43,8 @@ public class UploadFileModel extends BaseModel {
     public String getVersion() {
         return version;
     }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 }
