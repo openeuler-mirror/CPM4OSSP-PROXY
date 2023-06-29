@@ -96,4 +96,8 @@ public class TaskQueueModel {
         }
         return null;
     }
+
+    public DelayedTaskModel pollHeadTask() {
+        return taskModels.poll();
+    }
 }
