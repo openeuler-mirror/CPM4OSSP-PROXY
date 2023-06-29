@@ -55,5 +55,38 @@ import java.util.*;
 // 控制代码执行顺序
 @DependsOn("sourcePackageInfoConfig")
 public class WelcomeController extends AbstractController {
+    @Resource
+    private MiniSysLogService miniSysLogService;
 
+    @Resource
+    private DelayedTaskService delayedtaskService;
+
+    @Resource
+    private DelayedTaskRunner delayedTaskRunner;
+
+    @Resource
+    private SourceManagerService sourceManagerService;
+
+    @Resource
+    private SourceConfigService sourceconfigService;
+
+    @Resource
+    private PackageInfoTemplateService packageInfoTemplateService;
+
+    @Resource
+    private UserPkgPlanService userPkgPlanService;
+
+    Thread taskRunner = null;
+
+    private static final Logger logger = LoggerFactory.getLogger(WelcomeController.class);
+
+    private static IndexWriter writer = null;
+
+    Thread sourceScanThread = null;
+
+    private static Integer cycle = 0;
+
+    private static String cycleType = "ss";
+
+    private String nodeId = null;
 }
