@@ -5,5 +5,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SourcePackageInfoConfig {
+    private static String sourcePackageInfoIndexPath;
 
+    public static String getSourcePackageInfoIndexPath() {
+        return sourcePackageInfoIndexPath;
+    }
 }
