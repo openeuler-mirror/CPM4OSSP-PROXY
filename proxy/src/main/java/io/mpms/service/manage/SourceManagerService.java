@@ -4,6 +4,7 @@ import cn.hutool.core.io.watch.WatchMonitor;
 import cn.hutool.core.io.watch.Watcher;
 import cn.hutool.core.io.watch.watchers.DelayWatcher;
 import cn.hutool.system.SystemUtil;
+import io.mpms.model.system.SourceConfig;
 import io.mpms.service.mysqldb.MiniSysLogService;
 import io.mpms.service.mysqldb.SourceConfigService;
 import org.springframework.stereotype.Service;
