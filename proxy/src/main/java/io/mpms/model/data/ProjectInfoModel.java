@@ -98,4 +98,8 @@ public class ProjectInfoModel extends BaseModel {
     public void setJavaCopyItemList(List<JavaCopyItem> javaCopyItemList) {
         this.javaCopyItemList = javaCopyItemList;
     }
+
+    public String getJavaExtDirsCp() {
+        return StrUtil.emptyToDefault(javaExtDirsCp, StrUtil.EMPTY);
+    }
 }
