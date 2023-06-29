@@ -15,7 +15,13 @@ import java.util.List;
 @Mapper
 public interface MiniSysLogDao {
 
-
+    /**
+     * 通过ID查询单条数据
+     *
+     * @param id 主键
+     * @return 实例对象
+     */
+    MiniSysLog queryById(Integer id);
 
 
 }
