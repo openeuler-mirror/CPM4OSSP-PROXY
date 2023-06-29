@@ -78,4 +78,8 @@ public class ProcessModel extends BaseJsonModel {
     public void setPort(String port) {
         this.port = port;
     }
+
+    public String getJpomName() {
+        return jpomName;
+    }
 }
