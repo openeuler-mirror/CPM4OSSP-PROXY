@@ -61,4 +61,8 @@ public class DelayedTaskModel implements Comparable<DelayedTaskModel> {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Integer getId() {
+        return id;
+    }
 }
