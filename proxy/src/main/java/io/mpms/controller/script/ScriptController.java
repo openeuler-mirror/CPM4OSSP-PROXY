@@ -27,4 +27,11 @@ import java.io.IOException;
 @RequestMapping(value = "/script")
 public class ScriptController extends BaseAgentController {
 
+    @Resource
+    private ScriptServer scriptServer;
+
+    @RequestMapping(value = "list.json", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String list() {
+        return JsonMessage.getString(200, "", scriptServer.list());
+    }
 }
