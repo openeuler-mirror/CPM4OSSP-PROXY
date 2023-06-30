@@ -72,4 +72,8 @@ public class CertModel extends BaseModel {
     public void setWhitePath(String whitePath) {
         this.whitePath = whitePath;
     }
+
+    public String getCert() {
+        return cert;
+    }
 }
