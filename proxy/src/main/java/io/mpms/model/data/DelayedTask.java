@@ -42,4 +42,8 @@ public class DelayedTask implements Serializable, Comparable<DelayedTask> {
     public Integer getTaskId() {
         return taskId;
     }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
+    }
 }
