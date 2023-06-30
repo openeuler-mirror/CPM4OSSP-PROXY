@@ -45,4 +45,8 @@ public class SourceConfig implements Serializable {
     public String getArch() {
         return arch;
     }
+
+    public void setArch(String arch) {
+        this.arch = arch;
+    }
 }
