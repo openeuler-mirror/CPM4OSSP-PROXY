@@ -47,4 +47,18 @@ public class UploadFileModel extends BaseModel {
     public void setVersion(String version) {
         this.version = version;
     }
+
+    public void save(byte[] data) {
+        this.completeSize += data.length;
+        File file = new File(this.getFilePath());
+        FileUtil.mkParentDirs(file);
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file, true);
+            fileOutputStream.write(data);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
