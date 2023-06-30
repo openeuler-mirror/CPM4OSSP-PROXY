@@ -34,4 +34,9 @@ public class ScriptController extends BaseAgentController {
     public String list() {
         return JsonMessage.getString(200, "", scriptServer.list());
     }
+
+    @RequestMapping(value = "item.json", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String item(String id) {
+        return JsonMessage.getString(200, "", scriptServer.getItem(id));
+    }
 }
