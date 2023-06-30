@@ -65,4 +65,9 @@ public class DelayedTaskModel implements Comparable<DelayedTaskModel> {
     public Integer getId() {
         return id;
     }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
+    }
+
 }
