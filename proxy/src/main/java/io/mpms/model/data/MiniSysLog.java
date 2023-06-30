@@ -51,4 +51,8 @@ public class MiniSysLog implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Integer getType() {
+        return type;
+    }
 }
