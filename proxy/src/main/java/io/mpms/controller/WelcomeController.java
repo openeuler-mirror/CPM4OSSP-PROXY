@@ -89,4 +89,25 @@ public class WelcomeController extends AbstractController {
     private static String cycleType = "ss";
 
     private String nodeId = null;
+
+    /**
+     * 初始化创建索引文件夹
+     */
+    @PostConstruct
+    public void init(){
+        if (writer == null) {
+            Directory dir = null;
+            try {
+                String path = SourcePackageInfoConfig.getSourcePackageInfoIndexPath();
+                dir = FSDirectory.open(Paths.get(path));
+                Analyzer analyzer = new StandardAnalyzer();
+                IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+                iwc.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
+                iwc.setMaxBufferedDocs(10000);
+                writer = new IndexWriter(dir, iwc);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
