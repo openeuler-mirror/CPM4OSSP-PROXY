@@ -5,6 +5,20 @@ import com.alibaba.fastjson.JSONObject;
 
 public class DependencyParse {
 
+    public static void main(String[] args) {
+        String data = "backintime-kde\n" +
+                "  依赖: backintime-common\n" +
+                "  依赖: python-kde4\n" +
+                "  依赖: menu\n" +
+                "  依赖: <python:any>\n" +
+                "    python\n" +
+                "    python2\n" +
+                "  建议: kompare\n" +
+                "  冲突: <backintime-kde4>\n" +
+                "  替换: <backintime-kde4>\n";
+        System.out.println(parseDependency(data));
+    }
+
     public static JSONObject parseDependency(String dependencyString) {
         JSONObject data = new JSONObject();
         JSONArray dependencies = new JSONArray();
