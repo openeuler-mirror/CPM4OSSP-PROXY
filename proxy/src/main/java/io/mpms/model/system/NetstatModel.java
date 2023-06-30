@@ -34,4 +34,8 @@ public class NetstatModel extends BaseJsonModel {
     public String getSend() {
         return send;
     }
+
+    public void setSend(String send) {
+        this.send = send;
+    }
 }
