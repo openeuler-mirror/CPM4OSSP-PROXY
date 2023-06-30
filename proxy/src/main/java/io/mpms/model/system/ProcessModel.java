@@ -82,4 +82,8 @@ public class ProcessModel extends BaseJsonModel {
     public String getJpomName() {
         return jpomName;
     }
+
+    public void setJpomName(String jpomName) {
+        this.jpomName = jpomName;
+    }
 }
