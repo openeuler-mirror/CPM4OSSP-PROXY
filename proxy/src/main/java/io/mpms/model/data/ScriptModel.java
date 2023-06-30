@@ -85,4 +85,14 @@ public class ScriptModel extends BaseModel {
 //            CommandUtil.execCommand("chmod 755 " + FileUtil.getAbsolutePath(file));
 //        }
     }
+
+    /**
+     * 读取文件信息
+     */
+    public void readFileTime() {
+        File file = getFile(true);
+        long lastModified = file.lastModified();
+        setModifyTime(DateUtil.date(lastModified).toString());
+
+    }
 }
