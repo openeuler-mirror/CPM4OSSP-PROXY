@@ -129,4 +129,9 @@ public class DelayedTaskServiceImpl implements DelayedTaskService {
 
         return ret;
     }
+
+    @Override
+    public String getNodeId() {
+        return nodeId;
+    }
 }
