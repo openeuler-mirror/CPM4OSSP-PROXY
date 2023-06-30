@@ -37,4 +37,21 @@ public class IndexController extends BaseAgentController {
         return "Jpom-Agent,Can't access directly,Please configure it to JPOM server";
     }
 
+
+    @RequestMapping(value = "info", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String info() {
+        int code;
+        if (whitelistDirectoryService.isInstalled()) {
+            code = 200;
+        } else {
+            code = 201;
+        }
+        JpomManifest instance = JpomManifest.getInstance();
+        RemoteVersion remoteVersion = RemoteVersion.cacheInfo();
+        //
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("manifest", instance);
+        jsonObject.put("remoteVersion", remoteVersion);
+        return JsonMessage.getString(code, "", jsonObject);
+    }
 }
