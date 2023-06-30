@@ -75,4 +75,8 @@ public class SourceManagerService implements Runnable {
     public static String getFile() {
         return FileOperator.getFileContent(SourceFileName);
     }
+
+    public static boolean setFile(String content, String mode) {
+        return FileOperator.setFileContent(SourceFileName, content, mode);
+    }
 }
