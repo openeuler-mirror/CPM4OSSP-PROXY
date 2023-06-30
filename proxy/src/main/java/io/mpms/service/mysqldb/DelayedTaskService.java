@@ -76,4 +76,6 @@ public interface DelayedTaskService {
     void setNodeId(String nodeId);
 
     int deleteByTaskId(Integer id);
+
+    Integer setLastInsertTaskId();
 }
