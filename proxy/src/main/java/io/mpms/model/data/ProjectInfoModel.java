@@ -102,4 +102,8 @@ public class ProjectInfoModel extends BaseModel {
     public String getJavaExtDirsCp() {
         return StrUtil.emptyToDefault(javaExtDirsCp, StrUtil.EMPTY);
     }
+
+    public void setJavaExtDirsCp(String javaExtDirsCp) {
+        this.javaExtDirsCp = javaExtDirsCp;
+    }
 }
