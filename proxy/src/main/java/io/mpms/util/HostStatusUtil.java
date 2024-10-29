@@ -116,6 +116,39 @@ public class HostStatusUtil {
 
         return ret;
     }
+ static private ProcessSocket getProcessSocket(File file) {
+        ProcessSocket ret = new ProcessSocket();
+        ret.setPid(file.getName());
+        try (FileReader cmdReader = new FileReader(file.getAbsolutePath() + "/cmdline");
+             BufferedReader pidCmdBufReader = new BufferedReader(cmdReader)) {
+            String cmdLine = pidCmdBufReader.readLine();
+            if (cmdLine != null) {
+                ret.setPROGRAM(cmdLine.trim().replaceAll("\0", " "));
+            }
+            File fdPath = new File(file.getAbsolutePath() + "/fd");
+            File[] fdFiles = fdPath.listFiles();
+            BasicFileAttributes bfa;
+            if (null != fdFiles) {
+                for (File item : fdFiles) {
+                    FileInode inode = new FileInode();
+                    if (!item.exists()) {
+                        continue;
+                    }
 
+                    bfa = Files.readAttributes(item.toPath(), BasicFileAttributes.class);
+                    Object tmpKey = bfa.fileKey();
+
+                    inode.setFile(item);
+                    inode.setInode(getInodeByFileKey(tmpKey));
+                    ret.addToLinkFiles(inode);
+                }
+            }
+
+
+        } catch (Exception e) {
+            log.error("get " + file.getAbsolutePath() + " inode error! ---------- " + ExceptionUtil.getMessage(e));
+        }
+        return ret;
+    }
 
 }
