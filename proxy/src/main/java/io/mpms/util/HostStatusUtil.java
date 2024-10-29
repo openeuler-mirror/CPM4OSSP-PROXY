@@ -165,4 +165,46 @@ public class HostStatusUtil {
 
         return ret;
     }
+    //网络采集
+    static public List<ProgramNet> getProgramNets() {
+
+        List<ProgramNet> ret = new ArrayList<>();
+        List<ProcessSocket> processNetWorks = getProcessSockets();
+        List<NetInodePort> netList = new ArrayList<>();
+        if (new File(netTcp6File).exists()) {
+            netList.addAll(getInodePort(netTcp6File, TCP6));
+        }
+        if (new File(netTcpFile).exists()) {
+            netList.addAll(getInodePort(netTcpFile, TCP));
+        }
+        if (new File(netUdpFile).exists()) {
+            netList.addAll(getInodePort(netUdpFile, UDP));
+        }
+        if (new File(netUdp6File).exists()) {
+            netList.addAll(getInodePort(netUdp6File, UDP6));
+        }
+        if (null != processNetWorks) {
+            ProgramNet tmpProgram;
+            for (ProcessSocket item : processNetWorks) {
+                for (FileInode it : item.getProcessInodeList()) {
+                    for (NetInodePort iter : netList) {
+                        if (it.getInode().equals(iter.getInode())) {
+                            tmpProgram = new ProgramNet();
+                            String getPROGRAM = item.getPROGRAM();
+                            if (getPROGRAM.length() > 150) {
+                                tmpProgram.setPROGRAM(getPROGRAM.substring(0, 150));
+                            } else {
+                                tmpProgram.setPROGRAM(getPROGRAM);
+                            }
+                            tmpProgram.setPROTO(iter.getProto());
+                            tmpProgram.setPORT(Integer.parseInt(iter.getPort().trim(), 16));
+                            tmpProgram.setPid(item.getPid());
+                            ret.add(tmpProgram);
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
+    }
 }
