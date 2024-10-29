@@ -150,5 +150,19 @@ public class HostStatusUtil {
         }
         return ret;
     }
+  static private List<ProcessSocket> getProcessSockets() {
+        List<ProcessSocket> ret = new ArrayList<>();
+        File file = new File(proc);
+        File[] procFiles = file.listFiles();
+        if (null == procFiles) {
+            return null;
+        }
+        for (File item : procFiles) {
+            if (StringUtils.isNumeric(item.getName())) {
+                ret.add(getProcessSocket(item));
+            }
+        }
 
+        return ret;
+    }
 }
