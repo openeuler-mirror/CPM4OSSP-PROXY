@@ -63,5 +63,23 @@ public abstract class BaseAgentController extends BaseJpomController {
         return getUserName(request);
     }
 
+    /**
+     * 获取拦截器中缓存的项目信息
+     *
+     * @return this
+     */
+    protected ProjectInfoModel getProjectInfoModel() {
+        ProjectInfoModel projectInfoModel = tryGetProjectInfoModel();
+        Objects.requireNonNull(projectInfoModel, "获取项目信息失败");
+        return projectInfoModel;
+    }
 
+    protected ProjectInfoModel tryGetProjectInfoModel() {
+        ProjectInfoModel projectInfoModel = null;
+        String id = getParameter("id");
+        if (StrUtil.isNotEmpty(id)) {
+            projectInfoModel = projectInfoService.getItem(id);
+        }
+        return projectInfoModel;
+    }
 }
