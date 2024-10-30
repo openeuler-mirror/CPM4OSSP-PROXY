@@ -36,5 +36,32 @@ public abstract class BaseAgentController extends BaseJpomController {
         return agentIp;
     }
 
+    /**
+     * 获取server 端操作人
+     *
+     * @param request req
+     * @return name
+     */
+    private static String getUserName(HttpServletRequest request) {
+        String name = ServletUtil.getHeaderIgnoreCase(request, ConfigBean.MPMS_SERVER_USER_NAME);
+        name = CharsetUtil.convert(name, CharsetUtil.CHARSET_ISO_8859_1, CharsetUtil.CHARSET_UTF_8);
+        name = StrUtil.emptyToDefault(name, StrUtil.DASHED);
+        return URLUtil.decode(name, CharsetUtil.CHARSET_UTF_8);
+    }
+
+    /**
+     * 获取server 端操作人
+     *
+     * @return name
+     */
+    public static String getNowUserName() {
+        ServletRequestAttributes servletRequestAttributes = AbstractController.tryGetRequestAttributes();
+        if (servletRequestAttributes == null) {
+            return StrUtil.DASHED;
+        }
+        HttpServletRequest request = servletRequestAttributes.getRequest();
+        return getUserName(request);
+    }
+
 
 }
