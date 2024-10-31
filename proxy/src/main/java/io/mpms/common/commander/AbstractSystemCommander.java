@@ -70,5 +70,23 @@ public abstract class AbstractSystemCommander {
      */
     public abstract SystemCommanderResult updatePackage(String packageName);
 
+    /**
+     * 获取当前服务器的所有进程列表
+     *
+     * @return array
+     */
+    public abstract List<ProcessModel> getProcessList();
+
+
+    public abstract List<ProcessModel> getProcessListByFile();
+
+    /**
+     * 获取指定进程的 内存信息
+     *
+     * @param pid 进程id
+     * @return json
+     */
+    public abstract ProcessModel getPidInfo(int pid);
+
 
 }
