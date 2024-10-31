@@ -116,5 +116,29 @@ public abstract class AbstractSystemCommander {
         return String.format("%.2f", useAbleSpace / totalSpace * 100);
     }
 
+    /**
+     * 查询服务状态
+     *
+     * @param serviceName 服务名称
+     * @return true 运行中
+     */
+    public abstract boolean getServiceStatus(String serviceName);
+
+    /**
+     * 启动服务
+     *
+     * @param serviceName 服务名称
+     * @return 结果
+     */
+    public abstract String startService(String serviceName);
+
+    /**
+     * 关闭服务
+     *
+     * @param serviceName 服务名称
+     * @return 结果
+     */
+    public abstract String stopService(String serviceName);
+
 
 }
