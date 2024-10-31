@@ -88,5 +88,33 @@ public abstract class AbstractSystemCommander {
      */
     public abstract ProcessModel getPidInfo(int pid);
 
+    /**
+     * 清空文件内容
+     *
+     * @param file 文件
+     * @return 执行结果
+     */
+    public abstract String emptyLogFile(File file);
+
+    /**
+     * 磁盘占用
+     *
+     * @return 磁盘占用
+     */
+    protected static String getHardDisk() {
+        File[] files = File.listRoots();
+        double totalSpace = 0;
+        double useAbleSpace = 0;
+        for (File file : files) {
+            double total = file.getTotalSpace();
+            totalSpace += total;
+            useAbleSpace += total - file.getUsableSpace();
+        }
+        if (totalSpace == 0) {
+            return String.format("%.2f", 0F);
+        }
+        return String.format("%.2f", useAbleSpace / totalSpace * 100);
+    }
+
 
 }
