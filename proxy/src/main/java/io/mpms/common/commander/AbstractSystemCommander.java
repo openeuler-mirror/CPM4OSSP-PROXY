@@ -140,5 +140,23 @@ public abstract class AbstractSystemCommander {
      */
     public abstract String stopService(String serviceName);
 
+    /**
+     * 构建kill 命令
+     *
+     * @param pid 进程编号
+     * @return 结束进程命令
+     */
+    public abstract String buildKill(int pid);
 
+    /**
+     * kill
+     *
+     * @param pid 进程编号
+     */
+    public String kill(File file, int pid) {
+        String kill = buildKill(pid);
+        return CommandUtil.execSystemCommand(kill, file);
+    }
+
+    public  abstract PkgEntity getOnePackageInfo (String packageName);
 }
