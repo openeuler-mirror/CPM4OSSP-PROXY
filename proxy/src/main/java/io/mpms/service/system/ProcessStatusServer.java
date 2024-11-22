@@ -26,6 +26,30 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProcessStatusServer {
 
+  //获取进程描述信息
+    public String getProcessDes(String pid) {
+        String pathProces = "/proc/" + pid + "/cmdline";
+        String line;
+        String des = "";
+        if (StringUtils.isNotEmpty(pid) && StringUtils.isNumeric(pid)) {
+            try (FileReader reader = new FileReader(pathProces);
+                 BufferedReader bufferedReader = new BufferedReader(reader)) {
+                while (null != (line = bufferedReader.readLine())) {
+                    des = line;
+                }
+            } catch (Exception e) {
+                log.error("获取进程描述信息失败{}", ExceptionUtil.getMessage(e));
+            }
+        }
+        return des;
+    }
+
+    //获取指定值
+    public String getString(String str) {
+        String strTemp = str.substring(0, str.indexOf(":"));
+        return str.substring(strTemp.length() + 1).trim();
+    }
+
      private static String formStatus(String val) {
         String value = "未知";
         if ("S".equalsIgnoreCase(val)) {
