@@ -25,6 +25,33 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+/**
+     * 填充CPU各项时钟周期信息
+     */
+    public Double fillCpuTime() {
+        CpuTime ret = new CpuTime();
+        File file = new File("/proc/stat");
+        try (FileInputStream fileInputStream = new FileInputStream(file);
+             InputStreamReader in = new InputStreamReader(fileInputStream)) {
+            //采集CPU时间
+            BufferedReader br = new BufferedReader(in);
+            StringTokenizer token = new StringTokenizer(br.readLine());
+            token.nextToken();
+            ret.setUser(Double.parseDouble(token.nextToken() + ""));
+            ret.setNice(Double.parseDouble(token.nextToken() + ""));
+            ret.setSystem(Double.parseDouble(token.nextToken() + ""));
+            ret.setIdle(Double.parseDouble(token.nextToken() + ""));
+            ret.setIoWait(Double.parseDouble(token.nextToken() + ""));
+            ret.setIrq(Double.parseDouble(token.nextToken() + ""));
+            ret.setSoftIrq(Double.parseDouble(token.nextToken() + ""));
+            ret.setStealStolen(Double.parseDouble(token.nextToken() + ""));
+            ret.setGuest(Double.parseDouble(token.nextToken() + ""));
+        } catch (Exception e) {
+            log.error("采集cpu时间失败{}", e.getMessage());
+        }
+        return ret.getTotalTIme();
+    }
+
   //获取cpu描述信息
     public Integer getCpuCount() {
         String pathProces = "/proc/cpuinfo";
