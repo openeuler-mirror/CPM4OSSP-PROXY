@@ -25,6 +25,26 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+ /**
+     * 获取进程总内存
+     */
+    public String getAllMemory() {
+        String pathProces = "/proc/meminfo";
+        String line;
+        String getMemoryTotal = "";
+        try (FileReader reader = new FileReader(pathProces);
+             BufferedReader bufferedReader = new BufferedReader(reader)) {
+            while (null != (line = bufferedReader.readLine())) {
+                if (line.contains("MemTotal")) {
+                    String getName = getString(line);
+                    getMemoryTotal = Pattern.compile("[^0-9]").matcher(getName).replaceAll("").trim();
+                }
+            }
+        } catch (IOException e) {
+            log.error("获取进程内存失败{}", ExceptionUtil.getMessage(e));
+        }
+        return getMemoryTotal;
+    }
   //获取cpu占用率
     public CpuMessage getCpuInfo(String pid, CpuMessage cpuMessage) {
         //获取cpu全部时间
