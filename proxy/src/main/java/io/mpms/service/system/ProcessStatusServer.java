@@ -25,6 +25,23 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+  //获取cpu描述信息
+    public Integer getCpuCount() {
+        String pathProces = "/proc/cpuinfo";
+        String line;
+        int couCount = 0;
+        try (FileReader reader = new FileReader(pathProces);
+             BufferedReader bufferedReader = new BufferedReader(reader)) {
+            while (null != (line = bufferedReader.readLine())) {
+                if (line.contains("processor")) {
+                    couCount = couCount + 1;
+                }
+            }
+        } catch (Exception e) {
+            log.error("获取cpu核数信息失败{}", ExceptionUtil.getMessage(e));
+        }
+        return couCount;
+    }
 
   //获取进程描述信息
     public String getProcessDes(String pid) {
