@@ -25,6 +25,39 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+//获取某进程瞬时cpu时间
+    public Double processTime(String pid) {
+        double processTime = 0.0;
+        if (StringUtils.isNotEmpty(pid) && StringUtils.isNumeric(pid)) {
+            String pathProces = "/proc/" + pid + "/stat";
+            String line;
+            try (FileReader reader = new FileReader(pathProces);
+                 BufferedReader bufferedReader = new BufferedReader(reader)) {
+                while (null != (line = bufferedReader.readLine())) {
+                    if (line.contains("(")) {
+                        String strReplace = "";
+                        //抽取括号的空格
+                        String regex = "\\(.*?\\)";
+                        Pattern pattern = Pattern.compile(regex);
+                        Matcher matcher = pattern.matcher(line);
+                        while (matcher.find()) {
+                            strReplace = matcher.group().replaceAll(" ", "");
+                        }
+                        line = line.replaceAll(regex, strReplace);
+                    }
+                    String[] cpuMessages = line.split(" ");
+                    processTime = Double.parseDouble(cpuMessages[13]) + Double.parseDouble(cpuMessages[14])
+                            + Double.parseDouble(cpuMessages[15]) + Double.parseDouble(cpuMessages[16]);
+                }
+            } catch (Exception e) {
+                log.error("获取进程cpu信息失败{}", ExceptionUtil.getMessage(e));
+                //server单独重启之后,之前存的pid需要更新
+                ltcsPid = getLtcsPid();
+            }
+        }
+        return processTime;
+    }
+
 /**
      * 填充CPU各项时钟周期信息
      */
