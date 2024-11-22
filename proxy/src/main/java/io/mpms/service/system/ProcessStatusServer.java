@@ -25,6 +25,17 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+  //获取cpu占用率
+    public CpuMessage getCpuInfo(String pid, CpuMessage cpuMessage) {
+        //获取cpu全部时间
+        Double totalTime = fillCpuTime();
+        //获取当前进程时间
+        Double processTime = processTime(pid);
+        cpuMessage.setProcessTime(processTime);
+        cpuMessage.setTotalTime(totalTime);
+        cpuMessage.setPid(pid);
+        return cpuMessage;
+    }
 //获取某进程瞬时cpu时间
     public Double processTime(String pid) {
         double processTime = 0.0;
