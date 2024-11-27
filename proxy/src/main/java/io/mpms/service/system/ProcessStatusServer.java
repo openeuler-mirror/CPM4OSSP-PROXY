@@ -25,6 +25,56 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+//获取进程内存占用率
+    public Map<String, String> getProcesMemory(String pid) {
+        Map<String, String> processMap = new HashMap();
+        String pathProces = "/proc/" + pid + "/status";
+        if (StringUtils.isNotEmpty(pid) && StringUtils.isNumeric(pid)) {
+            try (FileReader reader = new FileReader(pathProces);
+                 BufferedReader bufferedReader = new BufferedReader(reader)) {
+                String line;
+                while (null != (line = bufferedReader.readLine())) {
+                    //获取进程名
+                    if (line.contains("Name")) {
+                        String getName = getString(line);
+                        processMap.put("NAME", getName);
+                    }
+                    //获取进程状态
+                    if (line.contains("State")) {
+                        String getState = getString(line);
+                        processMap.put("STATE", formStatus(getState.split(" ")[0]));
+                    }
+                    //获取交换内存
+                    if (line.contains("VmSwap")) {
+                        String getSwap = getString(line);
+                        String getProgressMemory = Pattern.compile("[^0-9]").matcher(getSwap).replaceAll("").trim();
+                        processMap.put("VMSWAP", String.format("%.2f", Double.parseDouble(getProgressMemory) / 1024));
+                    }
+                    //获取虚拟内存
+                    if (line.contains("VmSize")) {
+                        String getSwap = getString(line);
+                        String getProgressMemory = Pattern.compile("[^0-9]").matcher(getSwap).replaceAll("").trim();
+                        processMap.put("VMSIZE", String.format("%.2f", Double.parseDouble(getProgressMemory) / 1024));
+                    }
+                    //获取进程内存占用
+                    if (line.contains("VmRSS")) {
+                        String getMemory = getString(line);
+                        String getProgressMemory = Pattern.compile("[^0-9]").matcher(getMemory).replaceAll("").trim();
+                        double percentage = Double.parseDouble(String.format("%.4f", Double.parseDouble(getProgressMemory) / Double.parseDouble(memoryTotal))) * 100;
+                        processMap.put("RES", String.format("%.2f", Double.parseDouble(getProgressMemory) / 1024));
+                        processMap.put("MEM", String.format("%.2f", percentage));
+                        break;
+                    } else {
+                        processMap.put("RES", "0.00");
+                        processMap.put("MEM", "0.00");
+                    }
+                }
+            } catch (Exception e) {
+                log.error("获取进程内存失败{}", ExceptionUtil.getMessage(e));
+            }
+        }
+        return processMap;
+    }
   //获取UID
     public String getProcesUser(String pid) {
         String pathProces = "/proc/" + pid + "/status";
