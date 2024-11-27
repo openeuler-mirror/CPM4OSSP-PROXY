@@ -26,6 +26,24 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProcessStatusServer {
   /**
+     * 获取可信服务的pid
+     */
+    public static Map<String, String> getLtcsPid() {
+        Map<String, String> ltcsPid = new HashMap<>();
+        SystemCommanderResult serverPid = CommandUtil.execAgentSystemCommand("/usr/share/ltcs_server/jdk1.8.0/bin/jps");
+        String[] split = serverPid.getCommanderresult().split("\n");
+        for (String item : split) {
+            if (item.contains("server")) {
+                ltcsPid.put("server", item.split(" ")[0]);
+            }
+            if (item.contains("agent")) {
+                ltcsPid.put("proxy", item.split(" ")[0]);
+            }
+        }
+        return ltcsPid;
+    }
+
+  /**
      * CPU快照
      */
     public Map<String, String> getCpuTime(Map<String, CpuMessage> listold, Map<String, CpuMessage> listnew, List<String> process) {
