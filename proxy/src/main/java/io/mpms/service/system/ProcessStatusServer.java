@@ -25,6 +25,100 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+ /**
+     * 获取proc文件信息
+     */
+    final static String path = "/proc";
+
+    /**
+     * 全部内存
+     */
+    private static String memoryTotal = "";
+
+    /**
+     * CPU核数
+     */
+    private static Integer cpuCount = 1;
+
+    /**
+     * 缓存uid及对应用户名
+     */
+    Map<String, String> searchUidByName = new HashMap<>();
+
+    /**
+     * 缓存ltcs pid
+     */
+    Map<String, String> ltcsPid = new HashMap<>();
+
+    static Map<String, Integer> network = new HashMap<>();
+
+    public List<ProcessModel> accept(boolean getALL) {
+
+        List<ProcessModel> processList = new ArrayList<>();
+        Map<String, ProcessModel> processMap = new HashMap<>();
+        Map<String, CpuMessage> allCpu = new HashMap<>();
+        Map<String, CpuMessage> allCpu2 = new HashMap<>();
+        try {
+            List<String> allProcess = new ArrayList<>();
+            if (getALL) {
+                //获取所有进程
+                allProcess = getAllProcess();
+            } else {
+                //获取可信的进程
+                if (ObjectUtils.isEmpty(ltcsPid)) {
+                    ltcsPid = getLtcsPid();
+                }
+                allProcess.add(ltcsPid.get("server"));
+                allProcess.add(ltcsPid.get("proxy"));
+            }
+
+            //获取总内存大小
+            memoryTotal = getAllMemory();
+            //获取CPU核心数
+            cpuCount = getCpuCount();
+            if (network.isEmpty()) {
+                network = getNetwork();
+            }
+            for (String process : allProcess) {
+                //打第一次CPU快照
+                ProcessModel processObject = new ProcessModel();
+                CpuMessage cpuMessage = new CpuMessage();
+                allCpu.put(process, getCpuInfo(process, cpuMessage));
+                Map<String, String> memoryMap = getProcesMemory(process);
+                processObject.setMem(memoryMap.get("MEM"));
+                processObject.setCommand(memoryMap.get("NAME"));
+                processObject.setRes(memoryMap.get("RES"));
+                processObject.setStatus(memoryMap.get("STATE"));
+                processObject.setShr(memoryMap.get("VMSWAP"));
+                processObject.setVirt(memoryMap.get("VMSIZE"));
+                processObject.setUser(getProcesUser(process));
+                processObject.setPid(Integer.parseInt(process));
+                Integer port = network.get(process);
+                if (ObjectUtils.isNotEmpty(port)){
+                    processObject.setPort(String.valueOf(port));
+                }
+                processMap.put(process, processObject);
+            }
+            //睡眠线程 获取第二次CPU快照
+            Thread.sleep(50);
+            //获取第二次CPU快照
+            for (String process : allProcess) {
+                CpuMessage cpuMessage = new CpuMessage();
+                allCpu2.put(process, getCpuInfo(process, cpuMessage));
+            }
+            //计算CPU占比
+            Map<String, String> getCpuTime = getCpuTime(allCpu, allCpu2, allProcess);
+            for (String process : allProcess) {
+                processMap.get(process).setCpu(getCpuTime.get(process));
+                processList.add(processMap.get(process));
+            }
+        } catch (Exception e) {
+            log.error("获取进程cpu占用率异常{}", ExceptionUtil.getMessage(e));
+        }
+        //以cpu占用排序
+        return processList.stream()
+                .filter(s -> ObjectUtils.isNotEmpty(s.getCpu())).sorted((o1, o2) -> o2.getCpu().compareTo(o1.getCpu())).collect(Collectors.toList());
+    }
   /**
      * 获取可信服务的pid
      */
