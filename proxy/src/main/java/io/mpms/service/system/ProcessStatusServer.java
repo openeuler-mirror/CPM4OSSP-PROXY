@@ -25,6 +25,24 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+  /**
+     * CPU快照
+     */
+    public Map<String, String> getCpuTime(Map<String, CpuMessage> listold, Map<String, CpuMessage> listnew, List<String> process) {
+        Map<String, String> cpuList = new HashMap<>();
+        for (String pid : process) {
+            if (listold.get(pid) != null && listnew.get(pid) != null) {
+                double processCpuPret = (listnew.get(pid).getProcessTime() - listold.get(pid).getProcessTime()) /
+                        (listnew.get(pid).getTotalTime() - listold.get(pid).getTotalTime());
+                //保留小数点后四位
+                double processCpuPercentage = Double.parseDouble(String.format("%.4f", processCpuPret)) * 100;
+                //计算结果为多核，需乘CPU核数
+                cpuList.put(pid, String.format("%.2f", processCpuPercentage * cpuCount));
+            }
+        }
+        return cpuList;
+    }
+
  //获取所有进程
     public List<String> getAllProcess() {
         List<String> allProcess = new ArrayList();
