@@ -25,6 +25,19 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+ //获取所有进程
+    public List<String> getAllProcess() {
+        List<String> allProcess = new ArrayList();
+        File file = new File(path);
+        File[] files = file.listFiles();
+        for (File fileItem : files) {
+            if (StringUtils.isNumeric(fileItem.getName())) {
+                allProcess.add(fileItem.getName());
+            }
+        }
+        return allProcess;
+    }
+
 //获取进程内存占用率
     public Map<String, String> getProcesMemory(String pid) {
         Map<String, String> processMap = new HashMap();
