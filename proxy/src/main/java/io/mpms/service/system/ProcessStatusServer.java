@@ -25,6 +25,35 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class ProcessStatusServer {
+  //获取UID
+    public String getProcesUser(String pid) {
+        String pathProces = "/proc/" + pid + "/status";
+        String procesUser = "";
+        if (StringUtils.isNotEmpty(pid) && StringUtils.isNumeric(pid)) {
+            try (
+                    FileReader reader = new FileReader(pathProces);
+                    BufferedReader bufferedReader = new BufferedReader(reader)) {
+                String line;
+                while (null != (line = bufferedReader.readLine())) {
+                    String uid;
+                    if (line.contains("Uid")) {
+                        uid = line.split("\t")[1].trim();
+                        //获取用户名
+                        if (StringUtils.isNotBlank(searchUidByName.get(uid))) {
+                            procesUser = searchUidByName.get(uid);
+                        } else {
+                            procesUser = UidUtil.getUserNameByUid(uid);
+                            searchUidByName.put(uid, procesUser);
+                        }
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                log.error("获取进程用户失败{}", ExceptionUtil.getMessage(e));
+            }
+        }
+        return procesUser;
+    }
  /**
      * 获取进程总内存
      */
