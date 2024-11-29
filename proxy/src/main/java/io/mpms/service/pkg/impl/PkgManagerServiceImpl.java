@@ -33,6 +33,22 @@ public class PkgManagerServiceImpl implements PkgManagerService {
 
     public static List<String> pkgEntityList = new ArrayList<>();
 
+    /*
+     注册时导入数据
+     */
+    @Override
+    public void insertPkgMessage() {
+        NodeInfo nodeInfo = nodeInfoMapper.selectByPrimaryKey(String.valueOf(getNodeId()));
+        JSONObject version = systemUtils.getVersion();
+        List<PkgEntity> allPackageInfo = new LinuxSystemCommander().getAllPackageInfo("0");
+
+        nodeInfo.setSystem(version.getString("system").trim());
+        nodeInfo.setKernel(version.getString("kernel").trim());
+        nodeInfo.setInitialized(true);
+
+        pkgMessageService.saveBatch(allPackageInfo);
+        nodeInfoMapper.updateById(nodeInfo);
+    }
 
 
     /*
