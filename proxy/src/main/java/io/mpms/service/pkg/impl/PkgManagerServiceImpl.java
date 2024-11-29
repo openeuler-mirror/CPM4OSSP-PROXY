@@ -50,6 +50,19 @@ public class PkgManagerServiceImpl implements PkgManagerService {
         nodeInfoMapper.updateById(nodeInfo);
     }
 
+    /*
+      初始化
+     */
+    public void pkgInitialized() {
+        NodeInfo nodeInfo = nodeInfoMapper.selectByUrl(IpAddressUtils.getIp() + ":2125");
+        if (!ObjectUtils.isEmpty(nodeInfo)) {
+            if (!nodeInfo.isInitialized()) {
+                proxyId = nodeInfo.getId();
+                insertPkgMessage();
+            }
+        }
+    }
+
 
     /*
 获取节点id
