@@ -103,7 +103,51 @@ public class FileSystemController {
         page.setTotal(files.length);
         return new JsonMessage(200, "success", new PageInfo<>(page));
     }
+    @RequestMapping("ls")
+    public JsonMessage<PageInfo<NorMalPathTreeEntity>> getPathTree (@RequestBody FilePathReq filePathReq) {
+        List<NorMalPathTreeEntity> pathTreeList = new ArrayList<> ();
+        File[] files = FileOperatorUtil.getDirTreeHasParentFile ( filePathReq.getPath() );
+        File file = new File ( filePathReq.getPath () );
+        if ( files == null ) {
+            if ( !file.exists () ) {
+                return new JsonMessage ( 400, "文件不存在" );
+            }
+            return new JsonMessage ( 400, "无权访问" );
+        }
 
+
+        int startIndex = ( filePathReq.getPageNum () - 1 ) * filePathReq.getPageSize ();
+        for ( int i = startIndex ; i < files.length && i < startIndex + filePathReq.getPageSize () ; i++ ) {
+            NorMalPathTreeEntity item = new NorMalPathTreeEntity ();
+            item.setName ( files[ i ].getAbsolutePath () );
+            if ( files[ i ].isDirectory () ) {
+                item.setType ( "directory" );
+                item.setIsRead(false);
+            } else if ( files[ i ].isFile () ) {
+                try {
+                String type = tika.detect( files[ i ]);
+                item.setType ( type );
+                item.setIsRead(isFileRead(type));
+            }catch (Exception e){
+                log.error("解析文件类型异常\\n{}",  ExceptionUtils.getStackTrace(e));
+                item.setIsRead(false);
+                item.setType ( "other" );
+            }
+            } else {
+                item.setType ( "other" );
+                item.setIsRead(false);
+            }
+            pathTreeList.add ( item );
+        }
+        PageInfo<NorMalPathTreeEntity> pageInfo = new PageInfo<> ( pathTreeList );
+        pageInfo.setTotal ( files.length );
+        return new JsonMessage ( 200, "success", pageInfo );
+
+    }
+
+   public boolean isFileRead(String type){
+       return (type.contains("text") || type.endsWith("x-sh") || type.contains("json")) ;
+    }
 
 
 
