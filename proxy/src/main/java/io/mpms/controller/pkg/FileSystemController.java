@@ -171,7 +171,33 @@ public class FileSystemController {
         return new JsonMessage(200, "success", new PageInfo<>(page));
     }
 
-
+    private String getPageContent(int pageNum, int pageSize, String path) {
+        if (pageNum < 1) {
+            return "";
+        }
+        File file = new File(path);
+        String content = null;
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        int startRow = (int) page.getStartRow();
+        int endRow = (int) page.getEndRow();
+        long length = file.length();
+        page.setTotal(length);
+        if (file.isDirectory()) {
+            return "";
+        } else {
+            try (FileInputStream fileInputStream = new FileInputStream(file)) {
+                long skip = fileInputStream.skip(startRow);
+                if (skip != startRow) {
+                    log.warn("actual skip: {}, expect skip: {}", skip, startRow);
+                }
+                content = tika.parseToString(fileInputStream, new Metadata(), pageSize);
+                return content;
+            } catch (Exception e) {
+                log.error("解析文件内容异常\\n{}",ExceptionUtils.getStackTrace(e));
+            }
+        }
+        return "";
+    }
 
 
 }
