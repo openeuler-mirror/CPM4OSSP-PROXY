@@ -1,30 +1,15 @@
-package io.mpms.controller.pkg;
+package io.jpom.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 public class DependencyParse {
-
-    public static void main(String[] args) {
-        String data = "backintime-kde\n" +
-                "  依赖: backintime-common\n" +
-                "  依赖: python-kde4\n" +
-                "  依赖: menu\n" +
-                "  依赖: <python:any>\n" +
-                "    python\n" +
-                "    python2\n" +
-                "  建议: kompare\n" +
-                "  冲突: <backintime-kde4>\n" +
-                "  替换: <backintime-kde4>\n";
-        System.out.println(parseDependency(data));
-    }
-
     public static JSONObject parseDependency(String dependencyString) {
         JSONObject data = new JSONObject();
         JSONArray dependencies = new JSONArray();
         String[] lines = dependencyString.split("\n");
         for (int i = 1; i < lines.length; i++) {
-            String [] dependence = lines[i].trim().split("\\s+");
+            String[] dependence = lines[i].trim().split("\\s+");
             if (1 < dependence.length) {
                 int tmpi = i + 1;
                 JSONObject item = new JSONObject();
