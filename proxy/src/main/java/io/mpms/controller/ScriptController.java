@@ -65,6 +65,28 @@ public class ScriptController {
         return new JsonMessage(200, "success");
     }
 
+    @RequestMapping("executeLocal")
+    public JsonMessage executeLocal(@RequestBody ManageCommandAgentReq manageCommandAgentReq) {
+        int manageCommandId = manageCommandAgentReq.getManageCommandId();
+        String param = manageCommandAgentReq.getParam();
+        if (param == null) {
+            param = "";
+        }
+        String path = manageCommandAgentReq.getPath();
+        File file = new File(path);
+        if (!file.exists()) {
+            log.error("文件下发失败,脚本不存在");
+            ManageComand manageCommand = new ManageComand();
+            manageCommand.setId(manageCommandId);
+            manageCommand.setResult("脚本不存在");
+            manageCommand.setExitValue(-1);
+            int update = manageCommandService.update(manageCommand);
+            return new JsonMessage(501, "下发失败，脚本不存在");
+        }
+        manageCommandService.doExecute(path, param, manageCommandId);
+        return new JsonMessage(200, "success");
+    }
+
 
 
 
