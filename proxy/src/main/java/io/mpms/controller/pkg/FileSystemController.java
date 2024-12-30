@@ -149,6 +149,27 @@ public class FileSystemController {
        return (type.contains("text") || type.endsWith("x-sh") || type.contains("json")) ;
     }
 
+    @RequestMapping("cat")
+    public JsonMessage cat(@RequestBody FilePathReq filePathReq) {
+        String path = filePathReq.getPath();
+        File file = new File(path);
+        String content = null;
+        int pageNum = filePathReq.getPageNum();
+        int pageSize = filePathReq.getPageSize();
+        long length = file.length();
+        Page page = PageHelper.startPage(pageNum, pageSize);
+        page.setTotal(length);
+        if (file.isDirectory()) {
+            return new JsonMessage(200, "success", "");
+        } else {
+            String pageContent = getPageContent(pageNum, pageSize, path);
+            String prePageContent = getPageContent(pageNum - 1, pageSize, path);
+            content = mergeLines(prePageContent, pageContent);
+            page.add(content);
+
+        }
+        return new JsonMessage(200, "success", new PageInfo<>(page));
+    }
 
 
 
