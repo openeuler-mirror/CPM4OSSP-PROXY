@@ -199,5 +199,16 @@ public class FileSystemController {
         return "";
     }
 
-
+    private String mergeLines(String first, String second) {
+        StringBuilder result = new StringBuilder();
+        if (first.lastIndexOf("\n") != -1) {
+            result.append(first.substring(first.lastIndexOf("\n") + 1));
+        }
+        if (second.lastIndexOf("\n") != -1) {
+            result.append(second.substring(0, second.lastIndexOf("\n")));
+        } else {
+            result.append(second);
+        }
+        return result.toString();
+    }
 }
