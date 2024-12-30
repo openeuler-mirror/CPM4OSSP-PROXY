@@ -63,6 +63,27 @@ public class PkgManagerServiceImpl implements PkgManagerService {
         }
     }
 
+    @Override
+    public void deletePkgByNodeId(Integer nodeId) {
+        QueryWrapper<PkgEntity> importPkgQuery = new QueryWrapper<>();
+        importPkgQuery.eq("node_id", nodeId);
+        importPkgQuery.eq("classification", "important");
+        List<PkgEntity> pkgEntityLists = pkgMessageService.list(importPkgQuery);
+        if (!pkgEntityLists.isEmpty()) {
+            pkgEntityLists.forEach(pkgEntity -> pkgEntityList.add(pkgEntity.getName()));
+        }
+        QueryWrapper<PkgEntity> query = new QueryWrapper<>();
+        query.eq("node_id", nodeId);
+        pkgMessageService.remove(query);
+    }
+
+    @Override
+    public void packageRefresh(Integer nodeId) {
+        deletePkgByNodeId(nodeId);
+        insertPkgMessage();
+        pkgEntityList.clear();
+    }
+
 
     /*
 获取节点id
